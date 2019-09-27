@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import Header from './components/Header';
 import ListaNoticias from './components/ListaNoticias';
+import Formulario from './components/Formulario';
 
 class App extends Component {
   state = {
@@ -11,8 +12,8 @@ class App extends Component {
     this.consultarNoticias();
   }
 
-  consultarNoticias = async () => {
-    const url = `https://newsapi.org/v2/top-headlines?country=br&apiKey=1062684949534e0eaa7cc8387a10dd3e`;
+  consultarNoticias = async (categoria = 'general') => {
+    const url = `https://newsapi.org/v2/top-headlines?country=br&category=${categoria}&apiKey=1062684949534e0eaa7cc8387a10dd3e`;
     const resposta = await fetch(url);
     const noticias = await resposta.json();
 
@@ -26,6 +27,7 @@ class App extends Component {
         <Fragment>
           <Header titulo='Noticias React API'/>
           <div className='container white contenedor-noticias'>
+            <Formulario consultarNoticias={this.consultarNoticias}/>
             <ListaNoticias noticias={this.state.noticias}/>
           </div>
         </Fragment>
